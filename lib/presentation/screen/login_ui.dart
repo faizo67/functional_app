@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../bloc/login/login_bloc.dart';
 
@@ -45,12 +46,8 @@ class _LoginUIState extends State<LoginUI> with SingleTickerProviderStateMixin {
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
-            // Navigate to home screen with access_token
-            Navigator.pushReplacementNamed(
-              context,
-              '/home',
-              arguments: state.accessToken, // Pass access_token
-            );
+            // Navigate to home screen with access_token using go_router
+            context.go('/home', extra: state.accessToken);
           }
         },
         builder: (context, state) {

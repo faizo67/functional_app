@@ -5,6 +5,7 @@ import '../bloc/home/home_event.dart';
 import '../bloc/home/home_state.dart';
 import '../../domain/usecases/home_usecase.dart';
 import '../../data/models/product_model.dart';
+import 'package:go_router/go_router.dart';
 
 /// HomeUI receives the accessToken from the login page and displays a list of products.
 /// Now uses HomeBloc and HomeUseCase to fetch products from the API.
@@ -56,12 +57,8 @@ class HomeUI extends StatelessWidget {
                       title: Text(product.title),
                       subtitle: Text(' 24${product.price.toStringAsFixed(2)}'),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => NextScreen(title: product.title),
-                          ),
-                        );
+                        // Use go_router for navigation to details
+                        context.go('/home/details', extra: product.title);
                       },
                     ),
                   );

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:functional_app/presentation/bloc/home/home_bloc.dart';
 import 'package:functional_app/presentation/bloc/login/login_bloc.dart';
-import 'package:functional_app/presentation/screen/login_ui.dart';
-import 'package:functional_app/presentation/screen/home_ui.dart';
 import 'service_locator.dart';
+import 'go_router.dart';
+import 'domain/usecases/home_usecase.dart';
 
 void main() {
   setupLocator();
@@ -16,26 +16,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeUseCase = getIt<HomeUseCase>();
+    final router = createRouter(homeUseCase);
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => getIt<LoginBloc>()),
         BlocProvider(create: (_) => getIt<HomeBloc>()),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        home: LoginUI(),
-        onGenerateRoute: (settings) {
-          if (settings.name == '/home') {
-            final accessToken = settings.arguments as String;
-            return MaterialPageRoute(
-              builder: (_) =>
-                  HomeUI(accessToken: accessToken, homeUseCase: getIt()),
-            );
-          }
-          // Add other routes here if needed
-          return null;
-        },
+        routerConfig: router,
       ),
     );
   }
