@@ -83,7 +83,7 @@ class NextScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                context.read<HomeBloc>().add(ShowDialogEvent(context));
+                context.read<HomeBloc>().add(ShowDialogEvent());
               },
               child: Text('Go Back'),
             ),

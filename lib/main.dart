@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:functional_app/core/utils/app_theme.dart';
+import 'package:functional_app/core/utils/dialog_service.dart';
 import 'package:functional_app/presentation/bloc/home/home_bloc.dart';
 import 'package:functional_app/presentation/bloc/login/login_bloc.dart';
 import 'service_locator.dart';
@@ -9,6 +10,7 @@ import 'domain/usecases/home_usecase.dart';
 
 void main() {
   setupLocator();
+   DialogService().navigatorKey = GlobalKey<NavigatorState>();
   runApp(const MyApp());
 }
 

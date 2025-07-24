@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:functional_app/core/utils/dialog_service.dart';
 import 'package:go_router/go_router.dart';
 import 'presentation/screen/login_ui.dart';
 import 'presentation/screen/home_ui.dart';
 import 'domain/usecases/home_usecase.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
-
 GoRouter createRouter(HomeUseCase homeUseCase) => GoRouter(
-  navigatorKey: _rootNavigatorKey,
+  navigatorKey: DialogService().navigatorKey,
   initialLocation: '/login',
   routes: [
     GoRoute(

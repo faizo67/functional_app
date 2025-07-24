@@ -10,7 +10,6 @@ class FetchHomeData extends HomeEvent {
 
 /// Event to trigger dialog, with BuildContext
 class ShowDialogEvent extends HomeEvent {
-  final BuildContext context;
-  ShowDialogEvent(this.context);
+  ShowDialogEvent();
 }
 
