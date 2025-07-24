@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 abstract class HomeEvent {}
 
 /// Event to fetch home data (replace dummy data with API call in the future)
@@ -6,8 +8,9 @@ class FetchHomeData extends HomeEvent {
   FetchHomeData({required this.accessToken});
 }
 
-/// Event to trigger dialog, with a callback to show the dialog
+/// Event to trigger dialog, with BuildContext
 class ShowDialogEvent extends HomeEvent {
-  final void Function() showDialogCallback;
-  ShowDialogEvent(this.showDialogCallback);
+  final BuildContext context;
+  ShowDialogEvent(this.context);
 }
+

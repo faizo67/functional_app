@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'home_event.dart';
 import 'home_state.dart';
 import '../../../domain/usecases/home_usecase.dart';
@@ -9,9 +10,22 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeUseCase homeUseCase;
   HomeBloc(this.homeUseCase) : super(HomeInitial()) {
     on<FetchHomeData>(_onFetchHomeData);
-
     on<ShowDialogEvent>((event, emit) {
-      event.showDialogCallback();
+      showDialog(
+        context: event.context,
+        builder: (context) => AlertDialog(
+          title: Text('Dialog from Bloc Event'),
+          content: Text(
+            'This dialog was triggered directly from the event handler!',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
     });
   }
 
