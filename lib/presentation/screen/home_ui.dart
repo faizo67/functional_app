@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:functional_app/core/utils/app_theme.dart';
+import 'package:functional_app/core/utils/event_handler_call_back.dart';
+import 'package:functional_app/core/utils/home/custom_product_card.dart';
 import '../bloc/home/home_bloc.dart';
 import '../bloc/home/home_event.dart';
 import '../bloc/home/home_state.dart';
 import '../../domain/usecases/home_usecase.dart';
-import '../../data/models/product_model.dart';
-import 'package:go_router/go_router.dart';
 
 /// HomeUI receives the accessToken from the login page and displays a list of products.
 /// Now uses HomeBloc and HomeUseCase to fetch products from the API.
@@ -24,6 +25,8 @@ class HomeUI extends StatelessWidget {
       create: (_) =>
           HomeBloc(homeUseCase)..add(FetchHomeData(accessToken: accessToken)),
       child: Scaffold(
+        // Use the appThemeColor for consistent theming surface is for body background
+        backgroundColor: appThemeColor.colorScheme.surface,
         appBar: AppBar(title: Text('Products')),
         body: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
@@ -47,20 +50,8 @@ class HomeUI extends StatelessWidget {
                         ),
                       );
                     },
-                    child: ListTile(
-                      leading: Image.network(
-                        product.image,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(product.title),
-                      subtitle: Text(' 24${product.price.toStringAsFixed(2)}'),
-                      onTap: () {
-                        // Use go_router for navigation to details
-                        context.go('/home/details', extra: product.title);
-                      },
-                    ),
+                    // Use the customProductCard function to create the card
+                    child: customProductCard(product, context),
                   );
                 },
               );
@@ -92,25 +83,7 @@ class NextScreen extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                context.read<HomeBloc>().add(
-                  ShowDialogEvent(() {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: Text('Dialog from Bloc Event'),
-                        content: Text(
-                          'This dialog was triggered directly from the event handler!',
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: Text('OK'),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
-                );
+                context.read<HomeBloc>().add(eventHandlerCallBack(context));
               },
               child: Text('Go Back'),
             ),

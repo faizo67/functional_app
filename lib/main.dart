@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:functional_app/core/utils/app_theme.dart';
 import 'package:functional_app/presentation/bloc/home/home_bloc.dart';
 import 'package:functional_app/presentation/bloc/login/login_bloc.dart';
 import 'service_locator.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => getIt<HomeBloc>()),
       ],
       child: MaterialApp.router(
+        theme: appThemeColor,
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         routerConfig: router,
