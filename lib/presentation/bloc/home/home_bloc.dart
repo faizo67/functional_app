@@ -9,7 +9,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeUseCase homeUseCase;
   HomeBloc(this.homeUseCase) : super(HomeInitial()) {
     on<FetchHomeData>(_onFetchHomeData);
-    on<ShowDialogEvent>((event, emit) => emit(HomeShowDialog()));
+    on<ShowDialogEvent>((event, emit) {
+      event.showDialogCallback();
+    });
   }
 
   Future<void> _onFetchHomeData(

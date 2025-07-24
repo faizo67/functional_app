@@ -82,40 +82,39 @@ class NextScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<HomeBloc, HomeState>(
-      listener: (context, state) {
-        if (state is HomeShowDialog) {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text('Dialog from Bloc'),
-              content: Text('This dialog was triggered by the Bloc!'),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text('OK'),
-                ),
-              ],
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('You are on the Details screen'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                context.read<HomeBloc>().add(
+                  ShowDialogEvent(() {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text('Dialog from Bloc Event'),
+                        content: Text(
+                          'This dialog was triggered directly from the event handler!',
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                );
+              },
+              child: Text('Go Back'),
             ),
-          );
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('You are on the Details screen'),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  context.read<HomeBloc>().add(ShowDialogEvent());
-                },
-                child: Text('Go Back'),
-              ),
-            ],
-          ),
+          ],
         ),
       ),
     );

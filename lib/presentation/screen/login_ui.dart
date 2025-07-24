@@ -179,8 +179,8 @@ class _LoginUIState extends State<LoginUI> with TickerProviderStateMixin {
                     fillColor: Colors.white,
                     prefixIcon: AnimatedRotation(
                       turns: _rotateAnimation.value / (2 * 3.14159),
-                      child: Icon(icon, color: Colors.blueAccent),
                       duration: Duration(milliseconds: 300),
+                      child: Icon(icon, color: Colors.blueAccent),
                     ),
                     suffixIcon: isPassword
                         ? IconButton(
@@ -259,7 +259,7 @@ class _LoginUIState extends State<LoginUI> with TickerProviderStateMixin {
                   ],
                 ),
                 child: state is LoginLoading
-                    ? Container(
+                    ? SizedBox(
                         height: 48,
                         child: Center(
                           child: SizedBox(

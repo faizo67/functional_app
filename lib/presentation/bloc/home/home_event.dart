@@ -6,5 +6,8 @@ class FetchHomeData extends HomeEvent {
   FetchHomeData({required this.accessToken});
 }
 
-/// Event to trigger dialog
-class ShowDialogEvent extends HomeEvent {}
+/// Event to trigger dialog, with a callback to show the dialog
+class ShowDialogEvent extends HomeEvent {
+  final void Function() showDialogCallback;
+  ShowDialogEvent(this.showDialogCallback);
+}
