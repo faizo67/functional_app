@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:functional_app/core/utils/dialog_service.dart';
 import 'home_event.dart';
 import 'home_state.dart';
@@ -12,8 +10,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final HomeUseCase homeUseCase;
   HomeBloc(this.homeUseCase) : super(HomeInitial()) {
     on<FetchHomeData>(_onFetchHomeData);
+    // Handles the ShowDialogEvent to show a dialog without needing context, callBack, Bloc Listener
+    //
     on<ShowDialogEvent>((event, emit) {
-      DialogService().showMyDialog();
+      DialogService().showMyDialog(); 
     });
   }
 

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 abstract class HomeEvent {}
 
 /// Event to fetch home data (replace dummy data with API call in the future)
@@ -12,4 +10,3 @@ class FetchHomeData extends HomeEvent {
 class ShowDialogEvent extends HomeEvent {
   ShowDialogEvent();
 }
-

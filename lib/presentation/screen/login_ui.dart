@@ -335,6 +335,11 @@ class _LoginUIState extends State<LoginUI> with TickerProviderStateMixin {
             ),
             child: BlocConsumer<LoginBloc, LoginState>(
               listener: (context, state) {
+                if (state is LoginLoading) {
+                  // DialogService().showLoader(); // Removed as per edit hint
+                } else {
+                  // DialogService().hideLoader(); // Removed as per edit hint
+                }
                 if (state is LoginSuccess) {
                   // Navigate to home screen with access_token using go_router
                   context.go('/home', extra: state.accessToken);

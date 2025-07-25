@@ -13,21 +13,39 @@ class DialogService {
   /// Ensures that only DialogService can create its own instance.
   DialogService._internal();
 
-  late GlobalKey<NavigatorState> navigatorKey;
+  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  OverlayEntry? _loaderEntry;
+
+  void showLoader() {
+    if (_loaderEntry != null) return;
+    _loaderEntry = OverlayEntry(
+      builder: (_) => Container(
+        color: Colors.black45,
+        child: const Center(child: CircularProgressIndicator()),
+      ),
+    );
+    navigatorKey.currentState?.overlay?.insert(_loaderEntry!);
+  }
+
+  void hideLoader() {
+    _loaderEntry?.remove();
+    _loaderEntry = null;
+  }
 
   void showMyDialog() {
-    // Gets the current BuildContext from the navigator key.
-    final context = navigatorKey.currentContext!;
-
+    final context = navigatorKey.currentContext;
+    if (context == null) return;
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: Text("Dialog from Bloc"),
-        content: Text("This dialog was triggered from Bloc without context!"),
+      builder: (context) => AlertDialog(
+        title: const Text('Dialog from Bloc'),
+        content: const Text(
+          'This dialog was triggered from Bloc without context!',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text("OK"),
+            child: const Text('OK'),
           ),
         ],
       ),
